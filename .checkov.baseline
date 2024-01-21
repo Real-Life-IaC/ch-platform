@@ -1,0 +1,16 @@
+{
+    "failed_checks": [
+        {
+            "file": "/PlatformStack-sandbox.template.json",
+            "findings": [
+                {
+                    "resource": "AWS::Lambda::Function.CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E",
+                    "check_ids": [
+                        "CKV_AWS_115",
+                        "CKV_AWS_117"
+                    ]
+                }
+            ]
+        }
+    ]
+}

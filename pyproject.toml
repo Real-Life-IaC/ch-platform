@@ -1,0 +1,184 @@
+[tool.poetry]
+authors = ["Andre Sionek <andre@real-life-iac.com>"]
+name = "ch-platform"
+description = "Code for the book Real Life Infrastructure as Code with AWS CDK" # noqa
+keywords = ['cdk', 'iac', 'infrastructure', 'devops', 'python', 'backend', "platform"] # noqa
+readme = "README.md"
+homepage = "https://real-life-iac.com/"
+version = "0.0.0"
+packages = [
+    { include = "infra", from = "." },
+]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+aws-cdk-lib = "^2.99.0"
+constructs-package = {git = "https://github.com/Real-Life-IaC/cdk-constructs.git", rev = "0.7.1"}
+
+[tool.poetry.group.test]
+optional = true
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.4.3"     # Allows for testing of the project
+pytest-cov = "^4.1.0" # Allows to run coverage of the project
+syrupy = "^4.6.0"     # Allows testing snapshots
+
+[tool.poetry.group.checkov]
+optional = true
+
+[tool.poetry.group.checkov.dependencies]
+checkov = "^3.0.36"  # IaC (Cloudformation) security checks
+
+[tool.poetry.group.lint]
+optional = true
+
+[tool.poetry.group.lint.dependencies]
+bandit = {version = "^1.7.4", extras = ["toml"]}  # Security linter
+black = "^23.6.0"                                 # Python style checks
+commitizen = "^3.12.0"                            # Check commit messages
+cz-github-jira-conventional = "^2.0.0"            # Extension to commitizen to check for JIRA ticket number
+flake8 = "^6.1.0"                                  # Style Guide Enforcement
+flake8-annotations = "^3.0.1"                      # check for presence of type annotations in function definitions.
+flake8-bugbear = "^23.9.16"                        # Finding likely bugs and design problems in your program.
+flake8-docstrings = "^1.7.0"                       # Include checks provided by pep257.
+flake8-print = "^5.0.0"                            # Check for print statements in python files.
+isort = "^5.11.10"                                # Sort imports
+pre-commit = "^3.5.0"                             # Runs a pipeline before commiting code
+pyproject-flake8 = "6.1.0"                         # Allows configuration of flake 8 from pyproject.toml
+yamllint = "^1.33.0"                              # Linter for YAML files
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=1.5.0"]
+
+
+[tool.black]
+extend-exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.venv
+  | \.env
+  | cdk.out
+  | \.vscode
+  | build
+  | dist
+  | \.mypy_cache
+)\
+'''
+include = '\.pyi?$'
+line-length = 75
+target-version = ['py311']
+
+
+[tool.isort]
+combine_as_imports = true
+force_single_line = true
+line_length = 75
+lines_after_imports = 2
+lines_between_types = 1
+profile = 'black'
+src_paths = ["src", "tests"]
+
+
+[tool.flake8]
+exclude = [
+  ".venv/*",
+  ".vscode/*",
+  "cdk.out/*",
+]
+ignore = [
+  # Choose the flake8 errors to ignore globally here
+  "E501", # Line too long  (using B950 instead, which has 10% tolerance)
+  "D107", # Missing docstring in __init__
+  "D202", # No blank lines allowed after function docstring
+  "D400", # First line should end with a period
+  "D100", # Missing docstring in public module
+  "D104", # Missing docstring in public package
+  "ANN003", # Missing type annotation for **kwargs
+  "ANN002", # Missing type annotation for **args
+  "ANN1", # Missing type annotation for self in methot or cls method
+  "ANN401", # Dynamically typed expressions (typing.Any) are disallowed
+  "W503", # Line break before binary operator
+  "F821", # Undefined name
+]
+max-line-length = 85
+per-file-ignores = [
+  # Choose the flake8 errors to ignore per file here
+  "*/__init__.py:F401", # Ignore imported but unused in __init__.py files
+  "*tests/*:ANN,D", # Ignore Docstring and annotations on tests
+]
+select = [
+  # Choose the flake8 errors to select globally here
+  "C", # McCabe complexity
+  "E", # pep8 errors
+  "W", # pep8 warnings
+  "F", # pyflakes errors
+  "N", # naming conventions
+  "B", # bugbear errors (needs plugin installed)
+  "ANN", # flake8 annotations errors (needs plugin installed)
+  "T", # flake8 print errors (needs plugin installed)
+  "D", # flake8 doscstrings errors (needs plugin installed)
+  "B950", #  Line too long. It considers "max-line-length" but only triggers when exceeded by more than 10%.
+]
+# See other flake8 extensions here: https://github.com/DmytroLitvinov/awesome-flake8-extensions
+
+
+[tool.pyright]
+include = [
+  "src",
+  "tests",
+  "app.py",
+  "migrations",
+  "spectaql",
+]
+exclude = [
+  "**/node_modules",
+  "**/__pycache__",
+  ".venv",
+  "cdk.out",
+  "dist",
+  "build",
+  "**/.pytest_cache",
+  "**/.coverage",
+  "**/*.egg-info",
+  "**/.mypy_cache",
+  "**/build",
+]
+
+
+[tool.bandit]
+exclude_dirs = [
+  ".venv",
+  "cdk.out",
+]
+skips = [
+  # Choose the bandit errors to ignore globally
+  "B101", # Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+  "B105", # Possible hardcoded password
+]
+
+[tool.pytest.ini_options]
+addopts = """
+  --verbose
+  --color=yes
+  --assert=plain
+  --cov-report term
+  --last-failed
+  --cov=./
+"""
+minversion = "7.1"
+
+[tool.coverage.run]
+omit = ["*/tests/*", "*/__init__.py", "*/*config.py"]    # Remove test files from coverage run.
+
+[tool.coverage.report]
+omit = ["*/tests/*", "*/__init__.py", "*/*config.py"]    # Remove test files from coverage report.
+
+[tool.commitizen]
+ag_format = "$major.$minor.$patch$prerelease"
+name = "conventional_commits"
+version = "0.0.0"
+version_files = [
+  "pyproject.toml:version",
+]
