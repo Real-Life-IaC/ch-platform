@@ -13,7 +13,16 @@
             "console": "integratedTerminal",
             "justMyCode": true,
             "env": {
-              "PYTHONPATH": "${workspaceFolder}/src"
+              "PYTHONPATH": "${workspaceFolder}"
+            }
+        },
+        {
+            "name": "Debug CDK",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/app.py",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
             }
         }
     ]

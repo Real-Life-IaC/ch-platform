@@ -34,7 +34,7 @@ class PlatformStack(cdk.Stack):
             parameter_name="/platform/stage",
         )
 
-        B2Kms(
+        kms = B2Kms(
             scope=self,
             id="Kms",
         )
@@ -48,6 +48,7 @@ class PlatformStack(cdk.Stack):
         B2Cloudtrail(
             scope=self,
             id="CloudTrail",
+            kms_key=kms.key,
         )
 
         B2AccessLogs(

@@ -9,7 +9,7 @@ class B2Kms(Construct):
     def __init__(self, scope: Construct, id: str) -> None:
         super().__init__(scope, id)
 
-        kms_key = kms.Key(
+        self.key = kms.Key(
             scope=self,
             id="DefaultKey",
             description="Default KMS key to be used for encryption/decryption",
@@ -20,7 +20,7 @@ class B2Kms(Construct):
         ssm.StringParameter(
             scope=self,
             id="DefaultKeyArn",
-            string_value=kms_key.key_arn,
+            string_value=self.key.key_arn,
             description="Default KMS Key ARN",
             parameter_name="/platform/kms/default-key/arn",
         )
@@ -28,7 +28,7 @@ class B2Kms(Construct):
         ssm.StringParameter(
             scope=self,
             id="DefaultKeyId",
-            string_value=kms_key.key_id,
+            string_value=self.key.key_id,
             description="Default KMS Key ID",
             parameter_name="/platform/kms/default-key/id",
         )

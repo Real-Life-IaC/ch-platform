@@ -1,6 +1,7 @@
 import aws_cdk as cdk
 
 from aws_cdk import aws_cloudtrail as cloudtrail
+from aws_cdk import aws_kms as kms
 from aws_cdk import aws_logs as logs
 from aws_cdk import aws_s3 as s3
 from aws_cdk import aws_ssm as ssm
@@ -10,7 +11,12 @@ from constructs import Construct
 class B2Cloudtrail(Construct):
     """Create resources for auditing with cloudtrail"""
 
-    def __init__(self, scope: Construct, id: str) -> None:
+    def __init__(
+        self,
+        scope: Construct,
+        id: str,
+        kms_key: kms.Key,
+    ) -> None:
         super().__init__(scope, id)
 
         bucket = s3.Bucket(
@@ -36,6 +42,7 @@ class B2Cloudtrail(Construct):
             scope=self,
             id="Cloudtrail",
             bucket=bucket,
+            encryption_key=kms_key,
             send_to_cloud_watch_logs=True,
             cloud_watch_logs_retention=logs.RetentionDays.FOUR_MONTHS,
             enable_file_validation=True,
