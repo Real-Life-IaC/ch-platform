@@ -41,8 +41,8 @@ PlatformStack(
     stage=AwsStage.PRODUCTION,
     cidr_block="10.16.0.0/16",
     max_azs=3,
-    nat_gateways=1,  # In real-life #NATs = #AZs
-)
+    nat_gateways=0,  # In real-life #NATs = #AZs
+)  # TODO: Add NATs to the production VPC
 
 PlatformStack(
     scope=app,

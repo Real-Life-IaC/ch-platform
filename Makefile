@@ -7,7 +7,7 @@ help: ## Shows this help text
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 .PHONY: init
-init: clean install checkov test ## Clean environment and reinstall all dependencies
+init: clean install checkov test ## Clean the environment and install all project dependencies
 
 .PHONY: clean
 clean: ## Removes project virtual env and untracked files

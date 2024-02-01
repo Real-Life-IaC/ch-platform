@@ -1,6 +1,7 @@
 import aws_cdk as cdk
 
 from aws_cdk import aws_cloudtrail as cloudtrail
+from aws_cdk import aws_iam as iam
 from aws_cdk import aws_kms as kms
 from aws_cdk import aws_logs as logs
 from aws_cdk import aws_s3 as s3
@@ -42,6 +43,7 @@ class B2Cloudtrail(Construct):
             scope=self,
             id="Cloudtrail",
             bucket=bucket,
+            trail_name="cloudtrail",
             encryption_key=kms_key,
             send_to_cloud_watch_logs=True,
             cloud_watch_logs_retention=logs.RetentionDays.FOUR_MONTHS,
@@ -54,6 +56,19 @@ class B2Cloudtrail(Construct):
                 cloudtrail.InsightType.API_CALL_RATE,
                 cloudtrail.InsightType.API_ERROR_RATE,
             ],
+        )
+        kms_key.grant_encrypt_decrypt(
+            iam.ServicePrincipal(
+                service="cloudtrail.amazonaws.com",
+                conditions={
+                    "StringEquals": {
+                        "aws:SourceArn": f"arn:aws:cloudtrail:{cdk.Aws.REGION}:{cdk.Aws.ACCOUNT_ID}:trail/cloudtrail"  # noqa: B950
+                    },
+                    "StringLike": {
+                        "kms:EncryptionContext:aws:cloudtrail:arn": f"arn:aws:cloudtrail:*:{cdk.Aws.ACCOUNT_ID}:trail/*"  # noqa: B950
+                    },
+                },
+            )
         )
 
         trail.log_all_lambda_data_events()

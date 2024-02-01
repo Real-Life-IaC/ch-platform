@@ -29,13 +29,6 @@ class B2Network(Construct):
         # Add a flow log to the VPC
         self.vpc.add_flow_log(id="FlowLog")
 
-        # Add a cloudwatch gateway endpoint to the VPC
-        cw_logs_endpoint = self.vpc.add_interface_endpoint(
-            id="CloudwatchGateway",
-            service=ec2.InterfaceVpcEndpointAwsService.CLOUDWATCH_LOGS,
-        )
-        cw_logs_endpoint.connections.allow_default_port_from_any_ipv4()
-
         # Create a SSM parameter for the VPC ID
         ssm.StringParameter(
             scope=self,
