@@ -16,6 +16,8 @@ class B2AccessLogs(Construct):
             scope=self,
             id="Bucket",
             block_public_access=s3.BlockPublicAccess.BLOCK_ALL,
+            object_ownership=s3.ObjectOwnership.BUCKET_OWNER_PREFERRED,
+            access_control=s3.BucketAccessControl.LOG_DELIVERY_WRITE,
             encryption=s3.BucketEncryption.S3_MANAGED,
             versioned=False,
         )
