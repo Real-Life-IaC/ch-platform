@@ -17,7 +17,7 @@ PlatformStack(
     stage=AwsStage.SANDBOX,
     cidr_block="10.112.0.0/16",
     max_azs=2,
-    nat_gateways=0,
+    nat_gateways=0,  # In real-life #NATs = 1
 )
 
 PlatformStack(
@@ -29,7 +29,7 @@ PlatformStack(
     stage=AwsStage.STAGING,
     cidr_block="10.80.0.0/16",
     max_azs=2,
-    nat_gateways=0,
+    nat_gateways=0,  # In real-life #NATs = 1
 )
 
 PlatformStack(
@@ -41,8 +41,8 @@ PlatformStack(
     stage=AwsStage.PRODUCTION,
     cidr_block="10.16.0.0/16",
     max_azs=3,
-    nat_gateways=0,  # In real-life #NATs = #AZs
-)  # TODO: Add NATs to the production VPC
+    nat_gateways=1,  # In real-life #NATs = #AZs
+)
 
 PlatformStack(
     scope=app,
