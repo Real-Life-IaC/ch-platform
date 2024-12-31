@@ -11,9 +11,7 @@ app = cdk.App()
 PlatformStack(
     scope=app,
     id=f"Platform-{AwsStage.SANDBOX}",
-    env=cdk.Environment(
-        account=AwsAccountId.SANDBOX, region=AwsRegion.US_EAST_1
-    ),
+    env=cdk.Environment(account=AwsAccountId.SANDBOX, region=AwsRegion.US_EAST_1),
     stage=AwsStage.SANDBOX,
     cidr_block="10.112.0.0/16",
     max_azs=2,
@@ -23,9 +21,7 @@ PlatformStack(
 PlatformStack(
     scope=app,
     id=f"Platform-{AwsStage.STAGING}",
-    env=cdk.Environment(
-        account=AwsAccountId.STAGING, region=AwsRegion.US_EAST_1
-    ),
+    env=cdk.Environment(account=AwsAccountId.STAGING, region=AwsRegion.US_EAST_1),
     stage=AwsStage.STAGING,
     cidr_block="10.80.0.0/16",
     max_azs=2,
@@ -35,9 +31,7 @@ PlatformStack(
 PlatformStack(
     scope=app,
     id=f"Platform-{AwsStage.PRODUCTION}",
-    env=cdk.Environment(
-        account=AwsAccountId.PRODUCTION, region=AwsRegion.US_EAST_1
-    ),
+    env=cdk.Environment(account=AwsAccountId.PRODUCTION, region=AwsRegion.US_EAST_1),
     stage=AwsStage.PRODUCTION,
     cidr_block="10.16.0.0/16",
     max_azs=3,
@@ -47,9 +41,7 @@ PlatformStack(
 PlatformStack(
     scope=app,
     id=f"Platform-{AwsStage.MANAGEMENT}",
-    env=cdk.Environment(
-        account=AwsAccountId.MANAGEMENT, region=AwsRegion.US_EAST_1
-    ),
+    env=cdk.Environment(account=AwsAccountId.MANAGEMENT, region=AwsRegion.US_EAST_1),
     stage=AwsStage.MANAGEMENT,
     cidr_block="10.144.0.0/16",
     max_azs=3,

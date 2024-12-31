@@ -38,15 +38,9 @@ class B2AccessLogs(Construct):
                 actions=["s3:PutObject"],
                 resources=[bucket.arn_for_objects("*")],
                 principals=[
-                    iam.ServicePrincipal(
-                        service="logging.s3.amazonaws.com"
-                    ),
+                    iam.ServicePrincipal(service="logging.s3.amazonaws.com"),
                 ],
-                conditions={
-                    "StringEquals": {
-                        "aws:SourceAccount": [cdk.Aws.ACCOUNT_ID]
-                    }
-                },
+                conditions={"StringEquals": {"aws:SourceAccount": [cdk.Aws.ACCOUNT_ID]}},
             )
         )
 

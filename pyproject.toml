@@ -36,7 +36,6 @@ optional = true
 bandit = {version = "^1.7.4", extras = ["toml"]}  # Security linter
 black = "^23.6.0"                                 # Python style checks
 commitizen = "^3.12.0"                            # Check commit messages
-cz-github-jira-conventional = "^2.0.0"            # Extension to commitizen to check for JIRA ticket number
 flake8 = "^6.1.0"                                  # Style Guide Enforcement
 flake8-annotations = "^3.0.1"                      # check for presence of type annotations in function definitions.
 flake8-bugbear = "^23.9.16"                        # Finding likely bugs and design problems in your program.
@@ -176,8 +175,7 @@ omit = ["*/tests/*", "*/__init__.py", "*/*config.py"]    # Remove test files fro
 omit = ["*/tests/*", "*/__init__.py", "*/*config.py"]    # Remove test files from coverage report.
 
 [tool.commitizen]
-ag_format = "$major.$minor.$patch$prerelease"
-name = "conventional_commits"
+tag_format = "$version"
 version = "0.0.0"
 version_files = [
   "pyproject.toml:version",

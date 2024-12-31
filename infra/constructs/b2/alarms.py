@@ -19,8 +19,7 @@ class B2Alarms(Construct):
             scope=self,
             id="PlatformGroup",
             group_name="platform",
-            subscription_enabled=stage
-            in (AwsStage.PRODUCTION, AwsStage.MANAGEMENT),
+            subscription_enabled=stage in (AwsStage.PRODUCTION, AwsStage.MANAGEMENT),
             email_subscriptions=["platform-alarms@real-life-iac.com"]
             # Add other emails such PagerDuty, Slack, etc.
         )

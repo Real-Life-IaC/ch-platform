@@ -1,7 +1,7 @@
 from aws_cdk import aws_ec2 as ec2
 from aws_cdk import aws_ssm as ssm
 from constructs import Construct
-
+import aws_cdk as cdk
 
 class B2Network(Construct):
     """Create a VPC and Subnets following specific allocations"""
@@ -24,6 +24,8 @@ class B2Network(Construct):
             nat_gateways=nat_gateways,
             subnet_configuration=self.subnet_configuration,
             ip_addresses=ec2.IpAddresses.cidr(cidr_block=cidr_block),
+            enable_dns_hostnames=True,
+            enable_dns_support=True,
         )
 
         # Add a flow log to the VPC
@@ -59,7 +61,7 @@ class B2Network(Construct):
             ),
             ec2.SubnetConfiguration(
                 name="VpnSubnet",
-                subnet_type=ec2.SubnetType.PRIVATE_ISOLATED,
+                subnet_type=ec2.SubnetType.PRIVATE_WITH_EGRESS,
                 cidr_mask=27,
             ),
         ]
