@@ -14,6 +14,7 @@ packages = [
 python = "^3.11"
 aws-cdk-lib = "^2.99.0"
 constructs-package = {git = "https://github.com/Real-Life-IaC/cdk-constructs.git", rev = "0.7.1"}
+cdk-fck-nat = "1.5.11"
 
 [tool.poetry.group.test]
 optional = true
